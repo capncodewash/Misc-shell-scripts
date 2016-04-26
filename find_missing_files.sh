@@ -24,8 +24,11 @@
 # 'source_dir' should be the one you think has extra files that 
 # are not present in 'dest_dir'.
 
-source_dir="source/"
-dest_dir="dest/"
+source_dir="$1/"
+dest_dir="$2/"
+
+echo "Source dir: $source_dir">cmp_dirs.txt
+echo "Dest dir: $dest_dir">>cmp_dirs.txt
 
 # Files into which to write checksums of all files.
 # These will be cleared before output begins.

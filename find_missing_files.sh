@@ -26,19 +26,20 @@
 
 source_dir="$1/"
 dest_dir="$2/"
+work_dir=$(mktemp --directory --tmpdir fmfXXXXXXX)
 
 echo "Source dir: $source_dir">cmp_dirs.txt
 echo "Dest dir: $dest_dir">>cmp_dirs.txt
 
 # Files into which to write checksums of all files.
 # These will be cleared before output begins.
-source_files="cmp_source_files_unsorted.txt"
-dest_files="cmp_dest_files_unsorted.txt"
+source_files="$work_dir/cmp_source_files_unsorted.txt"
+dest_files="$work_dir/cmp_dest_files_unsorted.txt"
 
 # for sorted checksum lists - these are used to make the comparisons
 
-SOURCE="cmp_source_files_sorted.txt"
-DEST="cmp_dest_files_sorted.txt"
+SOURCE="$work_dir/cmp_source_files_sorted.txt"
+DEST="$work_dir/cmp_dest_files_sorted.txt"
 
 # The file which should contain the final output.
 # This will be cleared before output begins.
@@ -57,3 +58,5 @@ for sha1 in `comm -23 <(cat $SOURCE | awk '{print $1}') <(cat $DEST | awk '{prin
 for sha1 in `comm -13 <(cat $SOURCE | awk '{print $1}') <(cat $DEST | awk '{print $1}')`; do grep $sha1 $DEST; done | awk '{print $2}'|sort|uniq> $output_file2
 
 echo "Finished finding missing files. Output written to $output_file1 and $output_file2"
+
+rm -rf "$work_dir"

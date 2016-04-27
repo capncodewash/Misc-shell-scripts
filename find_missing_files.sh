@@ -20,9 +20,7 @@
 # See the GNU General Public License for more details,
 # which is available at www.gnu.org
  
-# Set these to the directories you'd like to check. 
-# 'source_dir' should be the one you think has extra files that 
-# are not present in 'dest_dir'.
+# Set these to the directories you'd like to compare.
 
 source_dir="$1/"
 dest_dir="$2/"
